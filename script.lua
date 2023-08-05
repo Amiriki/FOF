@@ -136,5 +136,5 @@ LocalPlayer.CharacterAdded:Connect(function()
     end
 end)
 
-if AutofarmEnabled then LocalPlayer.Character:BreakJoints() end
+LocalPlayer.Character:BreakJoints()
 
