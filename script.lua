@@ -72,7 +72,7 @@ end
 
 function ObtainTargets()
 	local TargetsList
-    local Index
+    	local Index
 	local General
 
     -- Figuring out what team to attack
@@ -128,8 +128,8 @@ LocalPlayer.CharacterAdded:Connect(function()
     local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
             if not AutofarmEnabled then return end
-					Attack(npc)
-                	Enemies[index] = nil
+		Attack(npc)
+        	Enemies[index] = nil
         end
     --print('[Field of Farming Debugger]: No enemies found, reseting!')
     --LocalPlayer.Character:BreakJoints()
