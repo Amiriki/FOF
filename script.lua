@@ -1,8 +1,21 @@
+-- Script setup
+
+getgenv().FOFConfig = {
+	['AutofarmEnabled'] = true,
+	['NPCWeapon'] = 'Venomancer', -- The name of the weapon that you want to use to clear the NPCs. An axe is recommended.
+	['BossWeapon'] = 'Venomancer', -- The name of the weapon that will be used to kill the general once the other enemies are dead.
+	['WebhookURL'] = 'https://discord.com/api/webhooks/1137281078210600971/m_tLqM1czjsznCrbN8FAfdb7pYbf_l13XBixiWn-lVb6IDlr-LoFCuEx-VEmpQojOTAr',
+	['DisableOnJoin'] = true, -- Whether you want the script to automatically disable itself if someone joins the server.
+	['EnableOnLeave'] = true, -- Whether you want the script to automatically restart when you are the only person in the server.
+	['DisableRendering'] = true -- Whether you want to disable rendering.
+}
+
 -- Script variables
 
 local Players = game:GetService('Players')
 local Teams = game:GetService('Teams')
 local HttpService = game:GetService('HttpService')
+local RunService = game:GetService('RunService')
 
 local LocalPlayer = Players.LocalPlayer
 local Stats = LocalPlayer.leaderstats
@@ -62,17 +75,16 @@ function SendWebhook()
 			}
 		}}
 	}
-request({Url = WebhookURL, Method = 'POST', Headers = {['Content-Type'] = 'application/json'}, Body = HttpService:JSONEncode(data)})
+request({Url = FOFConfig.WebhookURL, Method = 'POST', Headers = {['Content-Type'] = 'application/json'}, Body = HttpService:JSONEncode(data)})
 
 	XP = Stats.XP.Value
 	Gold = Stats.Gold.Value
 	Time = os.time()
-	--print('[Field of Farming Debugger]: Notification has been sent to webhook!')
 end
 
 function ObtainTargets()
 	local TargetsList
-    	local Index
+    local Index
 	local General
 
     -- Figuring out what team to attack
@@ -102,13 +114,13 @@ function Attack(target)
     if not target then return end
 	local CurrentWeapon
 
-	if target.Name:find('General') then CurrentWeapon = BossWeapon else CurrentWeapon = NPCWeapon end 
+	if target.Name:find('General') then CurrentWeapon = FOFConfig.BossWeapon else CurrentWeapon = FOFConfig.NPCWeapon end 
 	if Teams:FindFirstChild('Neutral') and LocalPlayer.Team == Teams:FindFirstChild('Neutral') then return end
 	repeat wait() until LocalPlayer.Backpack:FindFirstChild(CurrentWeapon) or LocalPlayer.Character:FindFirstChild(CurrentWeapon)
 	if LocalPlayer.Backpack:FindFirstChild(CurrentWeapon) then LocalPlayer.Character.Humanoid:EquipTool(LocalPlayer.Backpack:FindFirstChild(CurrentWeapon)) end
 
 	repeat
-		if not target:FindFirstChild('Torso') then return end
+		if not target:FindFirstChild('Torso') or not FOFConfig.AutofarmEnabled then return end
 		LocalPlayer.Character:FindFirstChild(CurrentWeapon):Activate()
 		LocalPlayer.Character.HumanoidRootPart.CFrame = target.Torso.CFrame * CFrame.new(0,0,3)
 		wait(0.125)
@@ -124,17 +136,28 @@ end
 -- Script events
 
 LocalPlayer.CharacterAdded:Connect(function()
-    if AutofarmEnabled then
+    if FOFConfig.AutofarmEnabled then
     local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
-            if not AutofarmEnabled then return end
-		Attack(npc)
-        	Enemies[index] = nil
+            if not FOFConfig.AutofarmEnabled then return end
+					Attack(npc)
+                	Enemies[index] = nil
         end
-    --print('[Field of Farming Debugger]: No enemies found, reseting!')
-    --LocalPlayer.Character:BreakJoints()
     end
 end)
 
+Players.PlayerAdded:Connect(function()
+	FOFConfig.AutofarmEnabled = false
+	LocalPlayer.Character:BreakJoints()
+end)
+
+Players.PlayerRemoving:Connect(function()
+	if #Players:GetPlayers() == 1 then
+		FOFConfig.AutofarmEnabled = true
+		LocalPlayer.Character:BreakJoints()
+	end
+end)
+
+RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
 LocalPlayer.Character:BreakJoints()
 
