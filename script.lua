@@ -1,15 +1,3 @@
--- Script setup
-
-getgenv().FOFConfig = {
-	['AutofarmEnabled'] = true,
-	['NPCWeapon'] = 'Venomancer', -- The name of the weapon that you want to use to clear the NPCs. An axe is recommended.
-	['BossWeapon'] = 'Venomancer', -- The name of the weapon that will be used to kill the general once the other enemies are dead.
-	['WebhookURL'] = 'https://discord.com/api/webhooks/1137281078210600971/m_tLqM1czjsznCrbN8FAfdb7pYbf_l13XBixiWn-lVb6IDlr-LoFCuEx-VEmpQojOTAr',
-	['DisableOnJoin'] = true, -- Whether you want the script to automatically disable itself if someone joins the server.
-	['EnableOnLeave'] = true, -- Whether you want the script to automatically restart when you are the only person in the server.
-	['DisableRendering'] = true -- Whether you want to disable rendering.
-}
-
 -- Script variables
 
 local Players = game:GetService('Players')
