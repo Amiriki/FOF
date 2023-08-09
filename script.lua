@@ -9,6 +9,13 @@ local LocalPlayer = Players.LocalPlayer
 local Stats = LocalPlayer.leaderstats
 local Gold = Stats.Gold.Value
 local XP = Stats.XP.Value
+local HGold = Gold
+local HXP = XP
+local HourlyGold = 0
+local HourlyExp = 0
+local GoldGained = 0
+local ExpGained = 0
+local TimeElapsed = 0
 local Time = os.time()
 
 local NPCs = workspace['Unbreakable']['Characters']
@@ -47,8 +54,18 @@ function SendWebhook()
 					["inline"] = false
 				},
 				{
-					["name"] = ":man_in_tuxedo: Experience",
+					["name"] = ":moneybag: Hourly Gold :hourglass:",
+					["value"] = tostring(Format_Number(math.floor(HourlyGold + 0.5))),
+					["inline"] = false
+				},
+				{
+					["name"] = ":man_in_tuxedo: Exp",
 					["value"] = tostring(Format_Number(Stats.XP.Value))..' (+'..(Format_Number(Stats.XP.Value - XP))..')',
+					["inline"] = false
+				},
+				{
+				["name"] = ":man_in_tuxedo: Hourly Exp :hourglass:",
+					["value"] = tostring(Format_Number(math.floor(HourlyExp + 0.5))),
 					["inline"] = false
 				},
 				{
@@ -56,11 +73,21 @@ function SendWebhook()
 					["value"] = tostring(Stats.Level.Value)..' ('..Format_Number(string.split(Split_Label, ' / ')[1])..' / '..Format_Number(string.split(Split_Label, ' / ')[2])..')',
 					["inline"] = false
 				},
+				{
+					["name"] = ":stopwatch: Time Elapsed",
+					["value"] = tostring(Format_Number(TimeElapsed))..' seconds',
+					["inline"] = false
+				},
+				{
+					["name"] = ":scroll: Changelog",
+					["value"] = '- Updated the embed and added hourly rates, as well as time elapsed. Contact me to report any bugs or suggest new features.',
+					["inline"] = false
+				},
 			},
 
 			["footer"] = {
 				["icon_url"] = "https://i.vgy.me/7hO15E.png",
-				["text"] = 'Round lasted '..(os.time() - Time)..' seconds | developed by amiriki'
+				["text"] = 'Round lasted '..(os.time() - Time)..' seconds | developed by amiriki | contact me for feedback'
 			}
 		}}
 	}
@@ -129,8 +156,8 @@ LocalPlayer.CharacterAdded:Connect(function()
     local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
             if not FOFConfig.AutofarmEnabled then return end
-		Attack(npc)
-        	Enemies[index] = nil
+					Attack(npc)
+                	Enemies[index] = nil
         end
     end
 end)
@@ -144,6 +171,18 @@ Players.PlayerRemoving:Connect(function()
 	if #Players:GetPlayers() == 1 then
 		FOFConfig.AutofarmEnabled = true
 		LocalPlayer.Character:BreakJoints()
+	end
+end)
+spawn(function()
+	while task.wait(3) do
+		if not FOFConfig.AutofarmEnabled then return end
+	
+		GoldGained = Stats.Gold.Value - HGold
+		ExpGained = Stats.XP.Value - HXP
+		TimeElapsed = TimeElapsed + 3
+	
+		HourlyGold = (GoldGained / TimeElapsed) * 3600
+		HourlyExp = (ExpGained / TimeElapsed) * 3600
 	end
 end)
 
