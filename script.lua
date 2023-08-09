@@ -13,6 +13,7 @@ local Time = os.time()
 
 local NPCs = workspace['Unbreakable']['Characters']
 local EnemyTeam
+local Thumbnail = game:HttpGet("https://thumbnails.roblox.com/v1/users/avatar?userIds="..LocalPlayer.UserId.."&size=420x420&format=Png&isCircular=false")
 
 -- Script functions
 
@@ -29,16 +30,16 @@ end
 
 function SendWebhook()
 	local Split_Label = string.gsub(LocalPlayer.PlayerGui.Gui.XPBar.TextLabel.Text, 'Level Up: ', '')
-	local Thumbnail = game:HttpGet("https://thumbnails.roblox.com/v1/users/avatar-bust?userIds="..LocalPlayer.UserId.."&size=420x420&format=Png&isCircular=true")
 	local data = {
 		["username"] = LocalPlayer.DisplayName,
-		["avatar_url"] = HttpService:JSONDecode(Thumbnail).data[1].imageUrl,
-
 		["embeds"] = {{
-			["title"] = "Field of Farming",
+			["title"] = "Field of Farming Autofarm",
 			["description"] = "Round over!",
+			["thumbnail"] = {
+				["url"] = HttpService:JSONDecode(Thumbnail).data[1].imageUrl
+			},
 			["type"] = "rich",
-			["color"] = tonumber(0x0096FF),
+			["color"] = tonumber(0x00ffff),
 			["fields"] = {
 				{
 					["name"] = ":moneybag: Gold",
@@ -58,8 +59,8 @@ function SendWebhook()
 			},
 
 			["footer"] = {
-				["icon_url"] = "https://i.vgy.me/loT5uM.png",
-				["text"] = 'Time Taken: '..(os.time() - Time)..' seconds | discord.gg/hMG9ESHT'
+				["icon_url"] = "https://i.vgy.me/7hO15E.png",
+				["text"] = 'Round lasted '..(os.time() - Time)..' seconds | developed by amiriki'
 			}
 		}}
 	}
@@ -104,14 +105,14 @@ function Attack(target)
 
 	if target.Name:find('General') then CurrentWeapon = FOFConfig.BossWeapon else CurrentWeapon = FOFConfig.NPCWeapon end 
 	if Teams:FindFirstChild('Neutral') and LocalPlayer.Team == Teams:FindFirstChild('Neutral') then return end
-	repeat wait() until LocalPlayer.Backpack:FindFirstChild(CurrentWeapon) or LocalPlayer.Character:FindFirstChild(CurrentWeapon)
+	repeat task.wait() until LocalPlayer.Backpack:FindFirstChild(CurrentWeapon) or LocalPlayer.Character:FindFirstChild(CurrentWeapon)
 	if LocalPlayer.Backpack:FindFirstChild(CurrentWeapon) then LocalPlayer.Character.Humanoid:EquipTool(LocalPlayer.Backpack:FindFirstChild(CurrentWeapon)) end
 
 	repeat
 		if not target:FindFirstChild('Torso') or not FOFConfig.AutofarmEnabled then return end
 		LocalPlayer.Character:FindFirstChild(CurrentWeapon):Activate()
 		LocalPlayer.Character.HumanoidRootPart.CFrame = target.Torso.CFrame * CFrame.new(0,0,3)
-		wait(0.125)
+		task.wait(0.125)
 	until not target or not target:FindFirstChild('Humanoid') or target:FindFirstChild('Humanoid').Health == 0
 
 	if string.find(target.Name, 'General') then
@@ -128,8 +129,8 @@ LocalPlayer.CharacterAdded:Connect(function()
     local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
             if not FOFConfig.AutofarmEnabled then return end
-					Attack(npc)
-                	Enemies[index] = nil
+		Attack(npc)
+        	Enemies[index] = nil
         end
     end
 end)
@@ -148,4 +149,3 @@ end)
 
 RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
 LocalPlayer.Character:BreakJoints()
-
