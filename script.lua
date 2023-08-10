@@ -13,8 +13,6 @@ local HGold = Gold
 local HXP = XP
 local HourlyGold = 0
 local HourlyExp = 0
-local GoldGained = 0
-local ExpGained = 0
 local TimeElapsed = 0
 local Time = os.time()
 
@@ -80,7 +78,7 @@ function SendWebhook()
 				},
 				{
 					["name"] = ":scroll: Changelog",
-					["value"] = '- Updated the embed and added hourly rates, as well as time elapsed. Contact me to report any bugs or suggest new features.',
+					["value"] = [[```Added an option to choose what map you want to farm on. Add ['Map'] = 'mapnamehere', to the config to use a different map. If a map is not provided, it will default to Savannah. Also added an anti-afk feature to the script. Contact amiriki for feedback and bug reports.```]],
 					["inline"] = false
 				},
 			},
@@ -143,7 +141,7 @@ function Attack(target)
 	until not target or not target:FindFirstChild('Humanoid') or target:FindFirstChild('Humanoid').Health == 0
 
 	if string.find(target.Name, 'General') then
-		Players:Chat(':mapvote savannah')
+		Players:Chat(':mapvote '..(FOFConfig.Map or 'Savannah'))
 		SendWebhook()
 	end
     
@@ -187,4 +185,9 @@ spawn(function()
 end)
 
 RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
+
+for i,v in pairs(getconnections(LocalPlayer.Idled)) do
+	v:Disable()
+end
+
 LocalPlayer.Character:BreakJoints()
