@@ -186,8 +186,14 @@ end)
 
 RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
 
-for i,v in pairs(getconnections(LocalPlayer.Idled)) do
-	v:Disable()
+if IsValyse then -- getconnections is broken on Valyse lol we love UWP shitsploits
+	game:GetService("Players").LocalPlayer.Idled:connect(function()
+		game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+	end)
+else
+    for i,v in pairs(getconnections(LocalPlayer.Idled)) do
+		v:Disable()
+	end
 end
 
 LocalPlayer.Character:BreakJoints()
