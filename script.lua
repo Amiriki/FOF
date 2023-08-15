@@ -1,5 +1,4 @@
 -- Script variables
-
 local Players = game:GetService('Players')
 local Teams = game:GetService('Teams')
 local HttpService = game:GetService('HttpService')
@@ -38,7 +37,7 @@ function SendWebhook()
 	local data = {
 		["username"] = LocalPlayer.DisplayName,
 		["embeds"] = {{
-			["title"] = "Field of Farming Autofarm",
+			["title"] = "Field of Heaven Autofarm",
 			["description"] = "Round over!",
 			["thumbnail"] = {
 				["url"] = HttpService:JSONDecode(Thumbnail).data[1].imageUrl
@@ -77,8 +76,12 @@ function SendWebhook()
 					["inline"] = false
 				},
 				{
-					["name"] = ":scroll: Changelog",
-					["value"] = [[```Added an option to choose what map you want to farm on. Add ['Map'] = 'mapnamehere', to the config to use a different map. If a map is not provided, it will default to Savannah. Also added an anti-afk feature to the script. Contact amiriki for feedback and bug reports.```]],
+					["name"] = ":scroll: Changelog 15/08/23",
+					["value"] = [[```- Made toggling the failsafes actually work (don't even ask lmao)
+					- Also got banned by admins for having suspicious stats. Remember not to overuse the autofarm, or admins will spot you.
+					- I am currently working on a GUI for Field of Battle, which'll also have some utility for demon farming (Legendary gem tracers, Automatically grab gem) 
+					- No release date ETA as I don't have much motivation to work on it, and getting banned is kinda annoying.
+					- DM suggestions & bug reports to me on Discord (amiriki)```]],
 					["inline"] = false
 				},
 			},
@@ -161,16 +164,21 @@ LocalPlayer.CharacterAdded:Connect(function()
 end)
 
 Players.PlayerAdded:Connect(function()
-	FOFConfig.AutofarmEnabled = false
-	LocalPlayer.Character:BreakJoints()
-end)
-
-Players.PlayerRemoving:Connect(function()
-	if #Players:GetPlayers() == 1 then
-		FOFConfig.AutofarmEnabled = true
+	if FOFConfig.DisableOnJoin then
+		FOFConfig.AutofarmEnabled = false
 		LocalPlayer.Character:BreakJoints()
 	end
 end)
+
+Players.PlayerRemoving:Connect(function()
+	if FOFConfig.EnableOnLeave then
+		if #Players:GetPlayers() == 1 then
+			FOFConfig.AutofarmEnabled = true
+			LocalPlayer.Character:BreakJoints()
+		end
+	end
+end)
+
 spawn(function()
 	while task.wait(3) do
 		if not FOFConfig.AutofarmEnabled then return end
@@ -186,14 +194,8 @@ end)
 
 RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
 
-if IsValyse then -- getconnections is broken on Valyse lol we love UWP shitsploits
-	game:GetService("Players").LocalPlayer.Idled:connect(function()
-		game:GetService("VirtualUser"):ClickButton2(Vector2.new())
-	end)
-else
-    for i,v in pairs(getconnections(LocalPlayer.Idled)) do
-		v:Disable()
-	end
-end
+Players.LocalPlayer.Idled:connect(function()
+	game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+end)
 
 LocalPlayer.Character:BreakJoints()
