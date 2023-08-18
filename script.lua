@@ -80,14 +80,15 @@ function SendWebhook()
 					["value"] = [[```- Working on Field of Heaven (what I decided to name the GUI inspired by the name of Heaven's Edge and Light) and I have a little showcase to show
 					regarding the legendary gem pathfinding and tracers. Link: https://www.youtube.com/watch?v=JUG6gb0-N0k
 					It took me hours to get a good video where I actually managed to get the gem. This script is fully automatic and you can leave it afk in a demon farm and get legendary gems.
-					I'm also going to add some features to make it seem more legit, such as chat messages responding to each gem. ```]],
+					I'm also going to add some features to make it seem more legit, such as chat messages responding to each gem.
+					also made a discord server so i can post more updates cuz communicating through discord embed sux: discord.gg/sXvQMuKQGX ```]],
 					["inline"] = false
 				},
 			},
 
 			["footer"] = {
 				["icon_url"] = "https://i.vgy.me/7hO15E.png",
-				["text"] = 'Round lasted '..(os.time() - Time)..' seconds | developed by amiriki | contact me for feedback'
+				["text"] = 'Round lasted '..(os.time() - Time)..' seconds | developed by amiriki | .gg/sXvQMuKQGX for feedback'
 			}
 		}}
 	}
