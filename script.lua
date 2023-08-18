@@ -76,12 +76,11 @@ function SendWebhook()
 					["inline"] = false
 				},
 				{
-					["name"] = ":scroll: Changelog 15/08/23",
-					["value"] = [[```- Made toggling the failsafes actually work (don't even ask lmao)
-					- Also got banned by admins for having suspicious stats. Remember not to overuse the autofarm, or admins will spot you.
-					- I am currently working on a GUI for Field of Battle, which'll also have some utility for demon farming (Legendary gem tracers, Automatically grab gem) 
-					- No release date ETA as I don't have much motivation to work on it, and getting banned is kinda annoying.
-					- DM suggestions & bug reports to me on Discord (amiriki)```]],
+					["name"] = ":scroll: Changelog 18/08/23",
+					["value"] = [[```- Working on Field of Heaven (what I decided to name the GUI inspired by the name of Heaven's Edge and Light) and I have a little showcase to show
+					regarding the legendary gem pathfinding and tracers. Link: https://www.youtube.com/watch?v=JUG6gb0-N0k
+					It took me hours to get a good video where I actually managed to get the gem. This script is fully automatic and you can leave it afk in a demon farm and get legendary gems.
+					I'm also going to add some features to make it seem more legit, such as chat messages responding to each gem. ```]],
 					["inline"] = false
 				},
 			},
