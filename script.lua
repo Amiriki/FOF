@@ -97,7 +97,6 @@ request({Url = FOFConfig.WebhookURL, Method = 'POST', Headers = {['Content-Type'
 end
 
 function ObtainTargets()
-	local NonTargets = Players:GetPlayers()
 	local TargetsList
     local Index
 	local General
@@ -115,6 +114,10 @@ function ObtainTargets()
 		if v.Name:find('General')  then
 			Index = i
 			General = v
+		end
+
+		if v:FindFirstChild('IsNpc') and V:FindFirstChild('IsNpc').Value == false then
+			TargetsList[i] = nil
 		end
 	end
 
@@ -154,7 +157,7 @@ LocalPlayer.CharacterAdded:Connect(function()
     local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
             if not FOFConfig.AutofarmEnabled then return end
-				if npc:WaitForChild('IsNpc').Value == false then return end
+				
 				Attack(npc)
                 Enemies[index] = nil
         end
