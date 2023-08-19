@@ -126,7 +126,6 @@ end
 
 function Attack(target)
     if not target then return end
-	if target:FindFirstChild('IsNpc').Value == false then return end
 	local CurrentWeapon
 
 	if target.Name:find('General') then CurrentWeapon = FOFConfig.BossWeapon else CurrentWeapon = FOFConfig.NPCWeapon end 
@@ -155,8 +154,9 @@ LocalPlayer.CharacterAdded:Connect(function()
     local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
             if not FOFConfig.AutofarmEnabled then return end
-					Attack(npc)
-                	Enemies[index] = nil
+				if npc:FindFirstChild('IsNpc').Value == false then return end
+				Attack(npc)
+                Enemies[index] = nil
         end
     end
 end)
