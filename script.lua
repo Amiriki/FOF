@@ -112,10 +112,6 @@ function ObtainTargets()
 
     -- Adding the general to the end of the table so that it doesn't target the general early
 	for i, v in pairs(TargetsList) do
-		if NonTargets[v.Name] then 
-			TargetsList[i] = nil
-		end
-
 		if v.Name:find('General')  then
 			Index = i
 			General = v
@@ -130,6 +126,7 @@ end
 
 function Attack(target)
     if not target then return end
+	if target:FindFirstChild('IsNpc').Value == false then return end
 	local CurrentWeapon
 
 	if target.Name:find('General') then CurrentWeapon = FOFConfig.BossWeapon else CurrentWeapon = FOFConfig.NPCWeapon end 
