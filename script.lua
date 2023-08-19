@@ -1,3 +1,4 @@
+
 -- Script variables
 local Players = game:GetService('Players')
 local Teams = game:GetService('Teams')
@@ -189,7 +190,7 @@ spawn(function()
 	end
 end)
 
-if FOHConfig.AutoShutdownTimer and FOHConfig.AutoShutdownTimer > 0 then
+if FOFConfig.AutoShutdownTimer and FOFConfig.AutoShutdownTimer > 0 then
 	spawn(function()
 		task.wait(FOHConfig.AutoShutdownTimer * 3600)
 		game:Shutdown()
