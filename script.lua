@@ -116,7 +116,7 @@ function ObtainTargets()
 			General = v
 		end
 
-		if v:FindFirstChild('IsNpc') and V:FindFirstChild('IsNpc').Value == false then
+		if v:FindFirstChild('IsNpc') and v:FindFirstChild('IsNpc').Value == false then
 			TargetsList[i] = nil
 		end
 	end
