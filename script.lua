@@ -4,7 +4,6 @@ local Players = game:GetService('Players')
 local Teams = game:GetService('Teams')
 local HttpService = game:GetService('HttpService')
 local RunService = game:GetService('RunService')
-
 local LocalPlayer = Players.LocalPlayer
 local Stats = LocalPlayer.leaderstats
 local Gold = Stats.Gold.Value
@@ -98,6 +97,7 @@ request({Url = FOFConfig.WebhookURL, Method = 'POST', Headers = {['Content-Type'
 end
 
 function ObtainTargets()
+	local NonTargets = Players:GetPlayers()
 	local TargetsList
     local Index
 	local General
@@ -111,8 +111,11 @@ function ObtainTargets()
 	TargetsList = NPCs[EnemyTeam]:GetChildren()
 
     -- Adding the general to the end of the table so that it doesn't target the general early
+	for i, v in pairs(TargetsList) do
+		if NonTargets[v.Name] then 
+			TargetsList[i] = nil
+		end
 
-	for i,v in pairs(TargetsList) do
 		if v.Name:find('General')  then
 			Index = i
 			General = v
@@ -192,7 +195,7 @@ end)
 
 if FOFConfig.AutoShutdownTimer and FOFConfig.AutoShutdownTimer > 0 then
 	spawn(function()
-		task.wait(FOFConfig.AutoShutdownTimer * 3600)
+		task.wait(FOHConfig.AutoShutdownTimer * 3600)
 		game:Shutdown()
 	end)
 end
