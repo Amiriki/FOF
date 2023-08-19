@@ -77,11 +77,8 @@ function SendWebhook()
 				},
 				{
 					["name"] = ":scroll: Changelog 18/08/23",
-					["value"] = [[```- Working on Field of Heaven (what I decided to name the GUI inspired by the name of Heaven's Edge and Light) and I have a little showcase to show
-					regarding the legendary gem pathfinding and tracers. Link: https://www.youtube.com/watch?v=JUG6gb0-N0k
-					It took me hours to get a good video where I actually managed to get the gem. This script is fully automatic and you can leave it afk in a demon farm and get legendary gems.
-					I'm also going to add some features to make it seem more legit, such as chat messages responding to each gem.
-					also made a discord server so i can post more updates cuz communicating through discord embed sux: discord.gg/sXvQMuKQGX ```]],
+					["value"] = [[```- Added a feature to the config called 'AutoShutdownTimer'. Set this to 0 if you don't want to automatically be kicked. Time is calculated in hours.
+					Join the discord (discord.gg/sXvQMuKQGX) for updates regarding the script```]],
 					["inline"] = false
 				},
 			},
@@ -191,6 +188,14 @@ spawn(function()
 		HourlyExp = (ExpGained / TimeElapsed) * 3600
 	end
 end)
+
+if FOHConfig.AutoShutdownTimer and FOHConfig.AutoShutdownTimer > 0 then
+	spawn(function()
+		task.wait(FOHConfig.AutoShutdownTimer * 3600)
+		game:Shutdown()
+	end)
+end
+
 
 RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
 
