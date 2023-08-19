@@ -154,7 +154,7 @@ LocalPlayer.CharacterAdded:Connect(function()
     local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
             if not FOFConfig.AutofarmEnabled then return end
-				if npc:FindFirstChild('IsNpc').Value == false then return end
+				if npc:WaitForChild('IsNpc').Value == false then return end
 				Attack(npc)
                 Enemies[index] = nil
         end
