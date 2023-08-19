@@ -192,7 +192,7 @@ end)
 
 if FOFConfig.AutoShutdownTimer and FOFConfig.AutoShutdownTimer > 0 then
 	spawn(function()
-		task.wait(FOHConfig.AutoShutdownTimer * 3600)
+		task.wait(FOFConfig.AutoShutdownTimer * 3600)
 		game:Shutdown()
 	end)
 end
