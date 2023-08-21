@@ -148,7 +148,7 @@ function Attack(target, weapon)
 			LocalPlayer.Character.HumanoidRootPart.CFrame = target.Torso.CFrame * CFrame.new(0,0,3)
 		end)
 		task.wait(0.125)
-	until not target or not target:FindFirstChild('Humanoid') or target:FindFirstChild('Humanoid').Health == 0
+	until not target or not target:FindFirstChild('Humanoid') or target:FindFirstChild('Humanoid').Health == 0 or not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild('Humanoid') or LocalPlayer.Character:FindFirstChild('Humanoid').Health == 0
 end
 
 -- Script events
@@ -241,6 +241,6 @@ end)
 
 LocalPlayer.Character:BreakJoints()
 
-NotifyChat("Autofarm has successfully been executed.", Color3.fromRGB(69, 215, 69))
+NotifyChat("Development Autofarm has successfully been executed.", Color3.fromRGB(69, 215, 69))
 NotifyChat("Report any bugs to Amiriki on Discord", Color3.fromRGB(69, 69, 215))
 NotifyChat("Join the Discord at dsc.gg/amiriki", Color3.fromRGB(69, 69, 215))
