@@ -241,6 +241,6 @@ end)
 
 LocalPlayer.Character:BreakJoints()
 
-NotifyChat("Development Autofarm has successfully been executed.", Color3.fromRGB(69, 215, 69))
+NotifyChat("Autofarm has successfully been executed.", Color3.fromRGB(69, 215, 69))
 NotifyChat("Report any bugs to Amiriki on Discord", Color3.fromRGB(69, 69, 215))
 NotifyChat("Join the Discord at dsc.gg/amiriki", Color3.fromRGB(69, 69, 215))
