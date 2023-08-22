@@ -1,4 +1,4 @@
-- Script Variables
+-- Script Variables
 
 local Players = game:GetService('Players')
 local Teams = game:GetService('Teams')
@@ -23,8 +23,13 @@ local Thumbnail = game:HttpGet("https://thumbnails.roblox.com/v1/users/avatar?us
 -- Script functions
 
 function NotifyChat(message, colour, required)
-	if 
-	StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Field of Heaven] "..message, Color = colour, Font = Enum.Font.SourceSansBold, TextSize = 16})
+	if required then
+		return StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Field of Heaven] "..message, Color = colour, Font = Enum.Font.SourceSansBold, TextSize = 16})
+	end
+
+	if FOFConfig.DebugMode then
+		return StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Field of Heaven] "..message, Color = colour, Font = Enum.Font.SourceSansBold, TextSize = 16})
+	end
 end
 
 function Format_Number(num) -- I skidded this whole function; I don't know how it works and I don't want to know
