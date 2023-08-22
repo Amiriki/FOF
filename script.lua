@@ -137,13 +137,15 @@ function ObtainTargets()
 
     if FOFConfig.IgnorePlayers then
         for i, player in ipairs(Players:GetPlayers()) do
-            if table.find(TargetsList, player.Name) then
+            if table.find(TargetsList, player) then
                 TargetsList[i] = nil
             end
         end
     end
+	if Index ~= nil then
+		TargetsList[Index] = nil
+	end
 
-	TargetsList[Index] = nil
 	table.insert(TargetsList, #TargetsList, General)
 	return TargetsList
 end
