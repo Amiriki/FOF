@@ -162,7 +162,7 @@ LocalPlayer.CharacterAdded:Connect(function()
         for index, npc in pairs(Enemies) do
 			print'beginning loop'
             if not FOFConfig.AutofarmEnabled then return NotifyChat('Autofarm is disabled!', Color3.fromRGB(255, 0, 0)) end
-			if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild('Humanoid') or LocalPlayer.Character:FindFirstChild('Humanoid').Health == 0 then print('we is dead');  return NotifyChat('Character died, waiting for respawn...', Color3.fromRGB(69, 69, 215)) end
+			if not LocalPlayer.Character or not LocalPlayer.Character:WaitForChild('Humanoid', 3) or LocalPlayer.Character:FindFirstChild('Humanoid').Health == 0 then print('we is dead');  return NotifyChat('Character died, waiting for respawn...', Color3.fromRGB(69, 69, 215)) end
             if Teams:FindFirstChild('Neutral') and LocalPlayer.Team == Teams:FindFirstChild('Neutral') then return end
 
             if npc.Name:find('General') then CurrentWeapon = FOFConfig.BossWeapon else CurrentWeapon = FOFConfig.NPCWeapon end 
