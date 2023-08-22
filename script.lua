@@ -191,9 +191,7 @@ NPCs.DescendantAdded:Connect(function(obj)
 			obj:WaitForChild('Humanoid').Died:Connect(function()
 				if FOFConfig.AutofarmEnabled then
 					Players:Chat(':mapvote '..(FOFConfig.Map or 'Savannah'))
-					if FOFConfig.WebhookEnabled then 
-						SendWebhook() 
-					end
+					SendWebhook() 
 				end
 			end)
 		end
@@ -205,9 +203,7 @@ for i, v in pairs(NPCs:GetDescendants()) do
 		v:FindFirstChild('Humanoid').Died:Connect(function()
 			if FOFConfig.AutofarmEnabled then
 				Players:Chat(':mapvote '..(FOFConfig.Map or 'Savannah'))
-				if FOFConfig.WebhookEnabled then 
-					SendWebhook() 
-				end
+				SendWebhook() 
 			end
 		end)
 	end
