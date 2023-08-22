@@ -1,4 +1,4 @@
--- Script Variables
+- Script Variables
 
 local Players = game:GetService('Players')
 local Teams = game:GetService('Teams')
@@ -22,7 +22,8 @@ local Thumbnail = game:HttpGet("https://thumbnails.roblox.com/v1/users/avatar?us
 
 -- Script functions
 
-function NotifyChat(message, colour)
+function NotifyChat(message, colour, required)
+	if 
 	StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Field of Heaven] "..message, Color = colour, Font = Enum.Font.SourceSansBold, TextSize = 16})
 end
 
@@ -116,14 +117,13 @@ function ObtainTargets()
 
 	if FOFConfig.AttackNeutralNPCs then
 		TablePos = #TargetsList
-		for i, v in pairs(NeutralTable) do
+		for i, v in ipairs(NeutralTable) do
 			TargetsList[TablePos] = v
-			print('Added '..v.Name..' at position '..tostring(#TargetsList))
 			TablePos += 1
 		end
 	end
 
-	for i, npc in pairs(TargetsList) do
+	for i, npc in ipairs(TargetsList) do
 		if npc.Name:find('General')  then
 			Index = i
 			General = npc
@@ -131,7 +131,7 @@ function ObtainTargets()
 	end
 
     if FOFConfig.IgnorePlayers then
-        for i, player in pairs(Players:GetPlayers()) do
+        for i, player in ipairs(Players:GetPlayers()) do
             if table.find(TargetsList, player.Name) then
                 TargetsList[i] = nil
             end
@@ -245,6 +245,6 @@ end)
 
 LocalPlayer.Character:BreakJoints()
 
-NotifyChat("Autofarm has successfully been executed.", Color3.fromRGB(69, 215, 69))
-NotifyChat("Report any bugs to Amiriki on Discord", Color3.fromRGB(69, 69, 215))
-NotifyChat("Join the Discord at dsc.gg/amiriki", Color3.fromRGB(69, 69, 215))
+NotifyChat("Autofarm has successfully been executed.", Color3.fromRGB(69, 215, 69), true)
+NotifyChat("Report any bugs to Amiriki on Discord", Color3.fromRGB(69, 69, 215), true)
+NotifyChat("Join the Discord at dsc.gg/amiriki", Color3.fromRGB(69, 69, 215), true)
