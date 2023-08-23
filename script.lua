@@ -247,7 +247,7 @@ end
 RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
 
 LocalPlayer.Idled:connect(function()
-	VirtalUser:ClickButton2(Vector2.new())
+	VirtualUser:ClickButton2(Vector2.new())
 end)
 
 LocalPlayer.Character:BreakJoints()
