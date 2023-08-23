@@ -136,7 +136,7 @@ function ObtainTargets()
 		end
 
 		if FOFConfig.IgnorePlayers then
-			if Players[npc.Name] then
+			if Players:FindFirstChild(npc.Name) then
 				TargetsList[i] = nil
 			end
 		end
