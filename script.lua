@@ -5,6 +5,7 @@ local Teams = game:GetService('Teams')
 local HttpService = game:GetService('HttpService')
 local RunService = game:GetService('RunService')
 local StarterGui = game:GetService('StarterGui')
+local VirtualUser = game:GetService("VirtualUser")
 local LocalPlayer = Players.LocalPlayer
 local Stats = LocalPlayer.leaderstats
 local Gold = Stats.Gold.Value
@@ -133,15 +134,14 @@ function ObtainTargets()
 			Index = i
 			General = npc
 		end
+
+		if FOFConfig.IgnorePlayers then
+			if Players[npc.Name] then
+				TargetsList[i] = nil
+			end
+		end
 	end
 
-    if FOFConfig.IgnorePlayers then
-        for i, player in ipairs(Players:GetPlayers()) do
-            if table.find(TargetsList, player) then
-                TargetsList[i] = nil
-            end
-        end
-    end
 	if Index ~= nil then
 		TargetsList[Index] = nil
 	end
@@ -246,8 +246,8 @@ end
 
 RunService:Set3dRenderingEnabled(not FOFConfig.DisableRendering)
 
-Players.LocalPlayer.Idled:connect(function()
-	game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+LocalPlayer.Idled:connect(function()
+	VirtalUser:ClickButton2(Vector2.new())
 end)
 
 LocalPlayer.Character:BreakJoints()
