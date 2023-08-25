@@ -161,12 +161,13 @@ function Attack(target, weapon)
 			LocalPlayer.Character:FindFirstChild(weapon):Activate()
 			LocalPlayer.Character.HumanoidRootPart.CFrame = target.Torso.CFrame * CFrame.new(0,0,3)
 		end)
-		task.wait(0.125)
+		task.wait()
 	until not target or not target:FindFirstChild('Humanoid') or target:FindFirstChild('Humanoid').Health == 0 or not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild('Humanoid') or LocalPlayer.Character:FindFirstChild('Humanoid').Health == 0
 end
 
 -- Script events
 LocalPlayer.CharacterAdded:Connect(function()
+	if FOFConfig.LagMode then task.wait(1.5) end
     if FOFConfig.AutofarmEnabled then
 		local CurrentWeapon
         local Enemies = ObtainTargets()
