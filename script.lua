@@ -122,7 +122,7 @@ function ObtainTargets()
 	TargetsList = NPCs[EnemyTeam]:GetChildren()
 
 	if FOFConfig.AttackNeutralNPCs then
-		TablePos = #TargetsList
+		TablePos = #TargetsList + 1
 		for i, v in ipairs(NeutralTable) do
 			TargetsList[TablePos] = v
 			TablePos += 1
@@ -158,11 +158,13 @@ function Attack(target, weapon)
 	repeat
 		pcall(function()
 			if not target:FindFirstChild('Torso') then return end
+			NotifyChat('Looping attack, target name is '..target.Name, Color3.fromRGB(69, 69, 215))
 			LocalPlayer.Character:FindFirstChild(weapon):Activate()
 			LocalPlayer.Character.HumanoidRootPart.CFrame = target.Torso.CFrame * CFrame.new(0,0,3)
 		end)
 		task.wait()
 	until not target or not target:FindFirstChild('Humanoid') or target:FindFirstChild('Humanoid').Health == 0 or not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild('Humanoid') or LocalPlayer.Character:FindFirstChild('Humanoid').Health == 0
+	NotifyChat('Player or target died', Color3.fromRGB(69, 69, 215))
 end
 
 -- Script events
@@ -172,6 +174,7 @@ LocalPlayer.CharacterAdded:Connect(function()
 		local CurrentWeapon
         local Enemies = ObtainTargets()
         for index, npc in pairs(Enemies) do
+			NotifyChat('Looping through enemies, enemy name is '..npc.Name, Color3.fromRGB(69, 69, 215))
             if not FOFConfig.AutofarmEnabled then return NotifyChat('Autofarm is disabled!', Color3.fromRGB(255, 0, 0)) end
 			if not LocalPlayer.Character or not LocalPlayer.Character:WaitForChild('Humanoid', 3) or LocalPlayer.Character:FindFirstChild('Humanoid').Health == 0 then return NotifyChat('Character died, waiting for respawn...', Color3.fromRGB(69, 69, 215)) end
             if Teams:FindFirstChild('Neutral') and LocalPlayer.Team == Teams:FindFirstChild('Neutral') then return end
@@ -181,6 +184,7 @@ LocalPlayer.CharacterAdded:Connect(function()
 			Attack(npc, CurrentWeapon)
             Enemies[index] = nil
         end
+		NotifyChat('End of table has been reached!', Color3.fromRGB(175, 0, 0))
     end
 end)
 
