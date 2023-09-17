@@ -1,11 +1,9 @@
--- Script Variables
-
-local Players = game:GetService('Players')
-local Teams = game:GetService('Teams')
-local HttpService = game:GetService('HttpService')
-local RunService = game:GetService('RunService')
-local StarterGui = game:GetService('StarterGui')
-local VirtualUser = game:GetService("VirtualUser")
+local Players = cloneref(game:GetService('Players'))
+local Teams = cloneref(game:GetService('Teams'))
+local HttpService = cloneref(game:GetService('HttpService'))
+local RunService = cloneref(game:GetService('RunService'))
+local StarterGui = cloneref(game:GetService('StarterGui'))
+local VirtualUser = cloneref(game:GetService("VirtualUser"))
 local LocalPlayer = Players.LocalPlayer
 local Stats = LocalPlayer.leaderstats
 local Gold = Stats.Gold.Value
@@ -24,11 +22,7 @@ local Thumbnail = game:HttpGet("https://thumbnails.roblox.com/v1/users/avatar?us
 -- Script functions
 
 function NotifyChat(message, colour, required)
-	if required then
-		return StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Field of Heaven] "..message, Color = colour, Font = Enum.Font.SourceSansBold, TextSize = 16})
-	end
-
-	if FOFConfig.DebugMode then
+	if required or FOFConfig.DebugMode then
 		return StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Field of Heaven] "..message, Color = colour, Font = Enum.Font.SourceSansBold, TextSize = 16})
 	end
 end
