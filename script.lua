@@ -1,5 +1,4 @@
 -- Script Variables
-
 local Players = cloneref(game:GetService('Players'))
 local Teams = cloneref(game:GetService('Teams'))
 local HttpService = cloneref(game:GetService('HttpService'))
@@ -22,14 +21,14 @@ local EnemyTeam
 local Thumbnail = game:HttpGet("https://thumbnails.roblox.com/v1/users/avatar?userIds="..LocalPlayer.UserId.."&size=420x420&format=Png&isCircular=false")
 
 -- Script functions
-
 function NotifyChat(message, colour, required)
 	if required or FOFConfig.DebugMode then
 		return StarterGui:SetCore("ChatMakeSystemMessage", {Text = "[Field of Heaven] "..message, Color = colour, Font = Enum.Font.SourceSansBold, TextSize = 16})
 	end
 end
 
-function Format_Number(num) -- I skidded this whole function; I don't know how it works and I don't want to know
+-- Add commas to numbers
+function Format_Number(num)
 	local formatted = num
 	while true do  
 		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", '%1,%2')
@@ -84,8 +83,8 @@ function SendWebhook()
 					["inline"] = false
 				},
 				{
-					["name"] = ":scroll: Changelog 21/08/23",
-					["value"] = [[```- Added ['AttackNeutralNPCs'] toggle to the config, and also added a table called ['UseGeneralWeaponNPCs'] = {['mage'] = true}. For more information, join the discord at dsc.gg/amiriki```]],
+					["name"] = ":scroll: Changelog 1/10/23",
+					["value"] = [[```No longer working on this for the time being. Join the discord at dsc.gg/amiriki```]],
 					["inline"] = false
 				},
 			},
